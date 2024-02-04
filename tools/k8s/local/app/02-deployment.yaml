@@ -6,10 +6,12 @@ metadata:
   name: whiskey-extractor
   namespace: whiskey-analytics
 spec:
-  # Example schedule: At minute 0 past every 6th hour. Adjust according to your needs.
-  schedule: "0 */6 * * *"
+  schedule: "* * * * *"
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
+      backoffLimit: 0
       template:
         metadata:
           labels:
@@ -20,7 +22,7 @@ spec:
           - name: whiskey-extractor
             image: datapains/whiskey-extractor:0.0.1
             command: [ "make" ]
-            args: ["--directory", "/app/", "run", "--config-file-name=/app/config/local/config.ini"]
+            args: ["--directory", "/app/", "run", "config-file-name=/app/config/config.ini"]
             imagePullPolicy: Never
             resources:
               limits:
@@ -29,6 +31,9 @@ spec:
               requests:
                 memory: "1Gi"
                 cpu: "1"
+            volumeMounts:
+              - name: whiskey-analytics-configmap
+                mountPath: /app/config
             env:
               - name: AWS_SECRET_ACCESS_KEY
                 value: "accountadmin123"
@@ -36,5 +41,12 @@ spec:
                 value: "accountadminsecret123"
               - name: AWS_REGION
                 value: "us-west-1"
+          volumes:
+            - name: whiskey-analytics-configmap
+              configMap:
+                name: "whiskey-analytics-configmap"
+                defaultMode: 0777
+                items:
+                  - key: "config.ini"
+                    path: "config.ini"
           restartPolicy: OnFailure
-          concurrencyPolicy: Forbid

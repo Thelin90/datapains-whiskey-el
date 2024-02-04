@@ -61,11 +61,13 @@ Verify this is up and running and bucket is created via:
 
 * http://localhost:30001/login
 
-For local deployment.bash
-
 ```bash
 user: accountadmin123
 pass: accountadminsecret123
+```
+
+```bash
+make apply-k8s LAYER=app
 ```
 
 
