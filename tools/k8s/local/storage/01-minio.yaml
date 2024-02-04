@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio
+  namespace: whiskey-analytics
+spec:
+  serviceName: minio-svc
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+      - name: minio
+        image: minio/minio:latest
+        resources:
+          limits:
+            memory: 800Mi
+            cpu: "0.5"
+          requests:
+            memory: 800Mi
+            cpu: "0.5"
+        args:
+        - server
+        - --address
+        - ":9000"
+        - --console-address
+        - ":9001"
+        - /var/lib/minio/data
+        env:
+        - name: MINIO_ACCESS_KEY
+          value: accountadmin123
+        - name: MINIO_SECRET_KEY
+          value: accountadminsecret123
+        ports:
+        - containerPort: 9000
+        - containerPort: 9001
+        volumeMounts:
+        - name: minio-volume
+          mountPath: /var/lib/minio/data
+  volumeClaimTemplates:
+  - metadata:
+      name: minio-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 800Mi
+      storageClassName: hostpath

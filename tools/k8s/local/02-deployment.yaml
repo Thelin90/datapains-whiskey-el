@@ -1,0 +1,40 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  labels:
+    app: whiskey-extractor
+  name: whiskey-extractor
+  namespace: whiskey-analytics
+spec:
+  # Example schedule: At minute 0 past every 6th hour. Adjust according to your needs.
+  schedule: "0 */6 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: whiskey-extractor
+        spec:
+          serviceAccountName: whiskey-service-account
+          containers:
+          - name: whiskey-extractor
+            image: datapains/whiskey-extractor:0.0.1
+            command: [ "make" ]
+            args: ["--directory", "/app/", "run", "--config-file-name=/app/config/local/config.ini"]
+            imagePullPolicy: Never
+            resources:
+              limits:
+                memory: "1Gi"
+                cpu: "1"
+              requests:
+                memory: "1Gi"
+                cpu: "1"
+            env:
+              - name: AWS_SECRET_ACCESS_KEY
+                value: "accountadmin123"
+              - name: AWS_ACCESS_KEY_ID
+                value: "accountadminsecret123"
+              - name: AWS_REGION
+                value: "us-west-1"
+          restartPolicy: OnFailure
+          concurrencyPolicy: Forbid

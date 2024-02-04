@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-client-job
+  namespace: whiskey-analytics
+spec:
+  template:
+    spec:
+      containers:
+      - name: minio-client-job
+        imagePullPolicy: Always
+        image: minio/mc:latest
+        command:
+          - sh
+          - -c
+          - mc config host add minio http://minio-svc.whiskey-analytics:9000 accountadmin123 accountadminsecret123 && mc mb --with-lock minio/lakehouse-local/lakehouse --region=us-west-1
+        resources:
+          limits:
+            memory: 20Mi
+            cpu: "0.1"
+          requests:
+            memory: 20Mi
+            cpu: "0.1"
+      restartPolicy: Never
+  backoffLimit: 4

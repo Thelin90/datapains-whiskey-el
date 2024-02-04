@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "tfd-to-bronze"
+version = "0.0.2"
+description = "Extract raw whiskey bidding data to bronze layer!"
+authors = ["Simon Thelin"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "2.31.0"
+deltalake = "^0.15.1"
+polars = "0.20.6"
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^3.6.0"
+pytest = "^8.0.0"
+pytest-cov = "^4.1.0"

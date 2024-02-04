@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name:
+  namespace: whiskey-analytics
+  labels:
+    app: redis
+data:
+  config.ini: |
+    [base]
+    log_level = "INFO"
+
+    [api]
+    url = "https://whiskyhunter.net/api/auctions_data"
+    output = "json"
+    parse_date_column = "dt"
+
+    [sink]
+    mode = "append"
+    hwm = True
+    endpoint_url = "http://wrapbytes-minio-svc.wrapbytes:9000"
