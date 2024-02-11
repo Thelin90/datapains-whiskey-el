@@ -1,15 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   labels:
     app: app
   name: app
   namespace: whiskey-analytics
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: app
   template:
     metadata:
       labels:
@@ -33,20 +29,12 @@ spec:
           - name: whiskey-analytics-configmap
             mountPath: /app/config
         env:
-          - name: AWS_SECRET_ACCESS_KEY
-            value: "accountadmin123"
           - name: AWS_ACCESS_KEY_ID
+            value: "accountadmin123"
+          - name: AWS_SECRET_ACCESS_KEY
             value: "accountadminsecret123"
           - name: AWS_DEFAULT_REGION
             value: "us-west-1"
-          - name: AWS_ALLOW_HTTP
-            value: "true"
-          - name: AWS_S3_ALLOW_UNSAFE_RENAME
-            value: "1"
-          - name: AWS_STORAGE_ALLOW_HTTP
-            value: "1"
-          - name: AWS_ALLOW_HTTP
-            value: "true"
       volumes:
         - name: whiskey-analytics-configmap
           configMap:
@@ -55,3 +43,5 @@ spec:
             items:
               - key: "config.ini"
                 path: "config.ini"
+      restartPolicy: Never
+  backoffLimit: 1

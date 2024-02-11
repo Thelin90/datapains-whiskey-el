@@ -15,13 +15,14 @@ class DeltaClient:
 
     def _setup_storage_options(self) -> Dict[str, str]:
         try:
-            os.environ[
-                "AWS_S3_ALLOW_UNSAFE_RENAME"
-            ] = self.delta_client_config.aws_s3_allow_unsafe_rename
+            os.environ["AWS_S3_ALLOW_UNSAFE_RENAME"] = "true"
             os.environ["AWS_STORAGE_ALLOW_HTTP"] = "1"
             os.environ["AWS_ALLOW_HTTP"] = "true"
 
             return {
+                "AWS_S3_ALLOW_UNSAFE_RENAME": "true",
+                "AWS_STORAGE_ALLOW_HTTP": "1",
+                "AWS_ALLOW_HTTP": "true",
                 "AWS_SECRET_ACCESS_KEY": os.environ["AWS_SECRET_ACCESS_KEY"],
                 "AWS_ACCESS_KEY_ID": os.environ["AWS_ACCESS_KEY_ID"],
                 "AWS_REGION": os.environ["AWS_DEFAULT_REGION"],
@@ -57,8 +58,8 @@ class DeltaClient:
                 table_or_uri=f"{table_uri}/{table_name}",
                 data=df.to_arrow(),
                 mode=mode,  # type: ignore
-                storage_options=self.storage_options,
                 overwrite_schema=overwrite_schema,
+                storage_options=self.storage_options,
             )
             logging.info(
                 f"Write Delta Client Successful, table: {table_name}, mode: {mode}"

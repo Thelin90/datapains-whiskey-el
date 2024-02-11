@@ -30,18 +30,6 @@ make update
 
 ### Local
 
-Please set
-
-```bash
-export AWS_ALLOW_HTTP=true
-```
-
-If running from local machine
-
-```bash
-make run config-file-name=config/local/example-config.ini
-```
-
 ### Test
 
 `TODO`
@@ -72,6 +60,25 @@ make run-container-tests type=unit
 make apply-k8s LAYER=base
 make apply-k8s LAYER=storage
 ```
+
+`From local machine`
+
+```bash
+export AWS_SECRET_ACCESS_KEY=accountadminsecret123
+export AWS_ACCESS_KEY_ID=accountadmin123
+export AWS_DEFAULT_REGION=us-west-1
+```
+
+```bash
+make run config-file-name=config/local/example-config.ini
+```
+
+`Within local k8s`
+
+```bash
+make apply-k8s LAYER=app
+```
+
 
 Verify this is up and running and bucket is created via:
 

@@ -75,3 +75,8 @@ exec-to-image:
 .PHONY: apply-k8s
 apply-k8s:
 	kubectl apply -f tools/k8s/$(ENV)/$(LAYER)
+
+.PHONY: run-whiskey-app-local-k8s
+run-whiskey-app-local-k8s:
+	kubectl delete -f tools/k8s/$(ENV)/$(LAYER)
+	kubectl apply -f tools/k8s/$(ENV)/$(LAYER)
