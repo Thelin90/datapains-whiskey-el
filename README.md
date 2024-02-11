@@ -9,7 +9,7 @@ Data Pains Training Session Part 1 Of End To End Data Product.
 
 ## Application guide
 
-*
+* [Guide](https://medium.com/@simon.thelin90/tutorial-data-product-building-e2e-step-1-data-extraction-of-whiskey-bidding-data-deployment-9c05b90312ed)
 
 ## Requirements
 
