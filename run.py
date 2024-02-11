@@ -5,6 +5,7 @@ from src.models.application_config import ApplicationConfig, Config
 from src.process import Process
 from src.sink.write import Write
 from src.source.extract import Extract
+from src.utils.delta_client import DeltaClient
 from src.utils.parser import Parser
 
 if __name__ == "__main__":
@@ -25,7 +26,14 @@ if __name__ == "__main__":
         raise ValueError("Could not setup application config!")
 
     extract = Extract(api_config=application_config.api_config)
-    write = Write(sink_config=application_config.sink_config)
+    delta_client = DeltaClient(
+        delta_client_config=application_config.delta_client_config
+    )
+
+    write = Write(
+        sink_config=application_config.sink_config,
+        delta_client=delta_client,
+    )
 
     process = Process(extract=extract, write=write)
 

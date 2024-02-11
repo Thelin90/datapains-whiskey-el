@@ -16,10 +16,11 @@ data:
     parse_date_column = "dt"
 
     [sink]
-    mode = "append"
-    hwm = True
-    endpoint_url = "http://minio-svc.whiskey-analytics:9000"
+    mode = "overwrite"
     table_name = "whiskey_bidding"
     table_base_uri = "s3://lakehouse-local/lakehouse/bronze"
-    date_hwm_compare = "dt"
     overwrite_schema = True
+
+    [delta]
+    endpoint_url = "http://minio-svc.whiskey-analytics.svc.cluster.local:9000"
+    aws_s3_allow_unsafe_rename = "1"

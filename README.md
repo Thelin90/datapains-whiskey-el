@@ -28,6 +28,20 @@ Update package
 make update
 ```
 
+### Local
+
+Please set
+
+```bash
+export AWS_ALLOW_HTTP=true
+```
+
+If running from local machine
+
+```bash
+make run config-file-name=config/local/example-config.ini
+```
+
 ### Test
 
 ```bash
@@ -69,5 +83,3 @@ pass: accountadminsecret123
 ```bash
 make apply-k8s LAYER=app
 ```
-
-

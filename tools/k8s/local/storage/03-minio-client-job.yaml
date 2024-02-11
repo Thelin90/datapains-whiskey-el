@@ -13,7 +13,7 @@ spec:
         command:
           - sh
           - -c
-          - mc config host add minio http://minio-svc.whiskey-analytics:9000 accountadmin123 accountadminsecret123 && mc mb --with-lock minio/lakehouse-local/lakehouse --region=us-west-1
+          - mc config host add minio http://minio-svc.whiskey-analytics.svc.cluster.local:9000 accountadmin123 accountadminsecret123 && mc mb --with-lock minio/lakehouse-local --region=us-west-1
         resources:
           limits:
             memory: 20Mi
