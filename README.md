@@ -44,6 +44,8 @@ make run config-file-name=config/local/example-config.ini
 
 ### Test
 
+`TODO`
+
 ```bash
 export PYTHONPATH="${PYTHONPATH}:src"
 make test type=unit
