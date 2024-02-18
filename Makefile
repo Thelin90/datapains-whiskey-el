@@ -15,7 +15,7 @@ clean-environment:
 
 .PHONY: install-environment
 install-environment:
-	poetry env use 3.10
+	poetry env use 3.11
 	poetry install
 
 .PHONY: info-environment

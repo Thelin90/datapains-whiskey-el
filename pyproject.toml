@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "tfd-to-bronze"
-version = "0.0.2"
+name = "datapains-whiskey-el"
+version = "0.0.1"
 description = "Extract raw whiskey bidding data to bronze layer!"
 authors = ["Simon Thelin"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 requests = "2.31.0"
 deltalake = "^0.15.1"
 polars = "0.20.6"
